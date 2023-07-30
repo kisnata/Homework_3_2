@@ -1,5 +1,7 @@
 package ru.hogwarts.school.model;
 
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+
 public class Student {
    private Long id;
    private String name;

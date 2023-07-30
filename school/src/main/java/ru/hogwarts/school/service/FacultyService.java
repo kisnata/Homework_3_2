@@ -42,7 +42,6 @@ public class FacultyService {
             throw new FacultyNotFoundException(id);
         }
     }
-
     public List<Faculty> findAll(@Nullable String color) {
         return Optional.ofNullable(color)
                 .map(c->
