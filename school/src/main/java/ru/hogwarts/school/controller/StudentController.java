@@ -2,7 +2,7 @@ package ru.hogwarts.school.controller;
 
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.dto.StudentDtoIn;
-import ru.hogwarts.school.entity.Student;
+import ru.hogwarts.school.dto.StudentDtoOut;
 import ru.hogwarts.school.service.StudentService;
 
 import java.util.List;
@@ -18,27 +18,27 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student create(@RequestBody StudentDtoIn studentDtoIn) {
+    public StudentDtoOut create(@RequestBody StudentDtoIn studentDtoIn) {
         return studentService.create(studentDtoIn);
     }
 
     @PutMapping("/{id}")
-    public Student update(@PathVariable("id") long id, @RequestBody StudentDtoIn studentDtoIn) {
+    public StudentDtoOut update(@PathVariable("id") long id, @RequestBody StudentDtoIn studentDtoIn) {
         return studentService.update(id, studentDtoIn);
     }
 
     @GetMapping("/{id}")
-    public Student get(@PathVariable("id") long id) {
+    public StudentDtoOut get(@PathVariable("id") long id) {
         return studentService.get(id);
     }
 
     @DeleteMapping("/{id}")
-    public Student delete(@PathVariable("id") long id) {
+    public StudentDtoOut delete(@PathVariable("id") long id) {
         return studentService.delete(id);
     }
 
     @GetMapping
-    public List<Student> findAll(@RequestParam(required = false) Integer age) {
+    public List<StudentDtoOut> findAll(@RequestParam(required = false) Integer age) {
         return studentService.findAll(age);
 
     }
