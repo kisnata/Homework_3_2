@@ -7,7 +7,6 @@ public class FacultyDtoIn {
 
     public FacultyDtoIn() {
     }
-
     public FacultyDtoIn(long id, String name, String color) {
         this.id = id;
         this.name = name;

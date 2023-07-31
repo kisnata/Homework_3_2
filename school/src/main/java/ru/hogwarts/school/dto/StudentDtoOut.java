@@ -8,7 +8,6 @@ public class StudentDtoOut {
 
     public StudentDtoOut() {
     }
-
     public long getId() {
         return id;
     }

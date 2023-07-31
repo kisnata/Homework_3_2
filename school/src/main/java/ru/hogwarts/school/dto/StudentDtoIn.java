@@ -5,7 +5,6 @@ public class StudentDtoIn {
     private String name;
     private int age;
     private Long facultyId;
-
     public StudentDtoIn(String name, int age, long facultyId) {
         this.name = name;
         this.age = age;

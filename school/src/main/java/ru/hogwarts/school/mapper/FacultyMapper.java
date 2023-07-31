@@ -1,5 +1,4 @@
 package ru.hogwarts.school.mapper;
-
 import org.springframework.stereotype.Component;
 import ru.hogwarts.school.dto.FacultyDtoIn;
 import ru.hogwarts.school.dto.FacultyDtoOut;

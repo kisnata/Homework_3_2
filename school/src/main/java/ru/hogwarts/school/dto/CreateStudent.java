@@ -1,7 +1,6 @@
 package ru.hogwarts.school.dto;
 
 public class CreateStudent {
-
     private String name;
     private int age;
 

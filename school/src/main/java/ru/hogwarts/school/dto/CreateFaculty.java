@@ -1,7 +1,6 @@
 package ru.hogwarts.school.dto;
 
 public class CreateFaculty {
-
     private String name;
     private String color;
 

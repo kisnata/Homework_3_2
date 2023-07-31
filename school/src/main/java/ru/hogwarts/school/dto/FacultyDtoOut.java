@@ -4,7 +4,6 @@ public class FacultyDtoOut {
     private long id;
     private String name;
     private String color;
-
     public FacultyDtoOut(long id, String name, String color) {
         this.id = id;
         this.name = name;

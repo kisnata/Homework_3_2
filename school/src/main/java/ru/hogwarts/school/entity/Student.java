@@ -1,5 +1,4 @@
 package ru.hogwarts.school.entity;
-
 import javax.persistence.*;
 
 @Entity
