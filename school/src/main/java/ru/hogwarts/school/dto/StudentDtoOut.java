@@ -1,42 +1,51 @@
 package ru.hogwarts.school.dto;
 
 public class StudentDtoOut {
-    private long id;
-    private String name;
-    private int age;
-    private FacultyDtoOut faculty;
 
-    public StudentDtoOut() {
-    }
-    public long getId() {
-        return id;
-    }
+  private long id;
+  private String name;
+  private int age;
+  private FacultyDtoOut faculty;
+  private String avatarUrl;
 
-    public void setId(long id) {
-        this.id = id;
-    }
+  public long getId() {
+    return id;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public void setId(long id) {
+    this.id = id;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public int getAge() {
-        return age;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
+  public int getAge() {
+    return age;
+  }
 
-    public FacultyDtoOut getFaculty() {
-        return faculty;
-    }
+  public void setAge(int age) {
+    this.age = age;
+  }
 
-    public void setFaculty(FacultyDtoOut faculty) {
-        this.faculty = faculty;
-    }
+  public FacultyDtoOut getFaculty() {
+    return faculty;
+  }
+
+  public void setFaculty(FacultyDtoOut faculty) {
+    this.faculty = faculty;
+  }
+
+  public String getAvatarUrl() {
+    return avatarUrl;
+  }
+
+  public void setAvatarUrl(String avatarUrl) {
+    this.avatarUrl = avatarUrl;
+  }
+
 }
