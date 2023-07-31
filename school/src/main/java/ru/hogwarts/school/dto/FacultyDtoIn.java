@@ -1,23 +1,24 @@
-package ru.hogwarts.school.model;
+package ru.hogwarts.school.dto;
 
-public class Faculty {
-    private Long id;
+public class FacultyDtoIn {
+    private long id;
     private String name;
     private String color;
 
-    public Faculty(Long id, String name, String color) {
+    public FacultyDtoIn() {
+    }
+
+    public FacultyDtoIn(long id, String name, String color) {
         this.id = id;
         this.name = name;
         this.color = color;
     }
-    public Faculty() {
-    }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

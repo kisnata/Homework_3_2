@@ -2,60 +2,63 @@ package ru.hogwarts.school.service;
 
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
-import ru.hogwarts.school.exception.FacultyNotFoundException;
+import ru.hogwarts.school.dto.StudentDtoIn;
+import ru.hogwarts.school.dto.StudentDtoOut;
+import ru.hogwarts.school.entity.Student;
 import ru.hogwarts.school.exception.StudentNotFoundException;
-import ru.hogwarts.school.model.Faculty;
-import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.mapper.StudentMapper;
+import ru.hogwarts.school.repository.StudentRepository;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
-    private static final Map<Long, Student> students = new HashMap<>();
-    private long idGenerator = 1;
 
+    private final StudentRepository studentRepository;
+    private final StudentMapper studentMapper;
 
-    public Student create(Student student) {
-        student.setId(idGenerator++);
-        students.put(idGenerator, student);
-        return student;
+    public StudentService(StudentRepository studentRepository,
+                          StudentMapper studentMapper) {
+        this.studentRepository = studentRepository;
+        this.studentMapper = studentMapper;
     }
-    public Student update(long id, Student student) {
-        if(students.containsKey(id)) {
-            Student oldStudent = students.get(id);
-            oldStudent.setName(student.getName());
-            oldStudent.setAge(student.getAge());
-            students.replace(id, oldStudent);
-            return oldStudent;
-        } else {
-            throw new StudentNotFoundException(id);
-        }
+
+    public StudentDtoOut create(StudentDtoIn studentDtoIn) {
+        return studentMapper.toDto(
+                studentRepository.save(
+                        studentMapper.toEntity(studentDtoIn)));
     }
-    public Student delete(long id) {
-        if(students.containsKey(id)) {
-            return students.remove(id);
-        } else {
-            throw new StudentNotFoundException(id);
-        }
+
+    public StudentDtoOut update(long id, StudentDtoIn studentDtoIn) {
+        return studentRepository.findById(id)
+                .map(oldStudent -> {
+                    oldStudent.setAge(studentDtoIn.getAge());
+                    oldStudent.setName(studentDtoIn.getName());
+                    return studentMapper.toDto(studentRepository.save(oldStudent));
+                })
+                .orElseThrow(() -> new StudentNotFoundException(id));
     }
-    public Student get(long id) {
-        if(students.containsKey(id)) {
-            return students.get(id);
-        } else {
-            throw new StudentNotFoundException(id);
-        }
+
+    public StudentDtoOut delete(long id) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new StudentNotFoundException(id));
+        studentRepository.delete(student);
+        return studentMapper.toDto(student);
     }
-    public static List<Student> findAll(Integer age) {
+
+    public StudentDtoOut get(long id) {
+        return studentRepository.findById(id)
+                .map(studentMapper::toDto)
+                .orElseThrow(() -> new StudentNotFoundException(id));
+    }
+
+    public List<StudentDtoOut> findAll(@Nullable Integer age) {
         return Optional.ofNullable(age)
-                .map(a->
-                        students.values().stream()
-                                .filter(faculty -> faculty.getAge() == a)
-                )
-                .orElseGet(() -> students.values().stream())
+                .map(studentRepository::findAllByAge)
+                .orElseGet(studentRepository::findAll).stream()
+                .map(studentMapper::toDto)
                 .collect(Collectors.toList());
-        }
     }
+}
