@@ -5,7 +5,6 @@ import ru.hogwarts.school.dto.FacultyDtoIn;
 import ru.hogwarts.school.dto.FacultyDtoOut;
 import ru.hogwarts.school.service.FacultyService;
 import java.util.List;
-
 @RestController
 @RequestMapping("/faculties")
 public class FacultyController {
