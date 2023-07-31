@@ -1,46 +1,73 @@
 package ru.hogwarts.school.controller;
 
-import org.springframework.web.bind.annotation.*;
-import ru.hogwarts.school.model.Student;
+import java.util.List;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import ru.hogwarts.school.dto.FacultyDtoOut;
+import ru.hogwarts.school.dto.StudentDtoIn;
+import ru.hogwarts.school.dto.StudentDtoOut;
 import ru.hogwarts.school.service.StudentService;
 
-import java.util.List;
-
 @RestController
-    @RequestMapping("/students")
-    public class StudentController {
+@RequestMapping("/students")
+public class StudentController {
 
-        private final StudentService studentService;
+  private final StudentService studentService;
 
-        public StudentController(StudentService studentService) {
+  public StudentController(StudentService studentService) {
+    this.studentService = studentService;
+  }
 
-            this.studentService = studentService;
-        }
+  @PostMapping
+  public StudentDtoOut create(@RequestBody StudentDtoIn studentDtoIn) {
+    return studentService.create(studentDtoIn);
+  }
 
-        @PostMapping
-        public Student create(@RequestBody Student student) {
-            return studentService.create(student);
-        }
+  @PutMapping("/{id}")
+  public StudentDtoOut update(@PathVariable("id") long id, @RequestBody StudentDtoIn studentDtoIn) {
+    return studentService.update(id, studentDtoIn);
+  }
 
-        @PutMapping("/{id}")
-        public Student update(@PathVariable("id") long id, @RequestBody Student student) {
-            return studentService.update(id, student);
-        }
+  @GetMapping("/{id}")
+  public StudentDtoOut get(@PathVariable("id") long id) {
+    return studentService.get(id);
+  }
 
-        @GetMapping("/{id}")
-        public Student get(@PathVariable("id") long id) {
-            return studentService.get(id);
-        }
+  @DeleteMapping("/{id}")
+  public StudentDtoOut delete(@PathVariable("id") long id) {
+    return studentService.delete(id);
+  }
 
-        @DeleteMapping("/{id}")
-        public Student delete(@PathVariable("id") long id) {
-            return studentService.delete(id);
-        }
+  @GetMapping
+  public List<StudentDtoOut> findAll(@RequestParam(required = false) Integer age) {
+    return studentService.findAll(age);
+  }
 
-        @GetMapping
-        public List<Student> findAll(@RequestParam(required = false) Integer age){
-            return StudentService.findAll(age);
+  @GetMapping("/filter")
+  public List<StudentDtoOut> findByAgeBetween(@RequestParam int ageFrom, @RequestParam int ageTo) {
+    return studentService.findByAgeBetween(ageFrom, ageTo);
+  }
 
-    }
+  @GetMapping("/{id}/faculty")
+  public FacultyDtoOut findFaculty(@PathVariable("id") long id) {
+    return studentService.findFaculty(id);
+  }
 
-    }
+  @PatchMapping(value = "/{id}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  public StudentDtoOut uploadAvatar(@PathVariable long id,
+      @RequestPart("avatar") MultipartFile multipartFile) {
+    return studentService.uploadAvatar(id, multipartFile);
+  }
+
+}
